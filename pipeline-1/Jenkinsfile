@@ -1,0 +1,28 @@
+pipeline {
+
+  agent {
+    kubernetes {
+      yamlFile 'build.yaml'
+    }
+  }
+
+  stages {
+    stage('Build image') {
+      steps {
+        container('helm-kubectl') {
+          sh 'echo build'
+        }
+      }
+    }
+
+    stage('Deploy image') {
+      steps {
+        container('helm-kubectl') {
+          script {
+            sh 'echo deploy'
+          }
+        }
+      }
+    }
+  }
+}
